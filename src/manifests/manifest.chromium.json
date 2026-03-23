@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "PubMed to BibTeX",
-    "version": "1.0",
+    "version": "0.0.1",
     "icons": {},
     "permissions": [
         "activeTab",

@@ -34,7 +34,6 @@ body {
     color: #555;
 }
 
-/* Box Anteprima Codice */
 #preview {
     background-color: var(--code-bg);
     color: #d4d4d4;
@@ -49,7 +48,6 @@ body {
     border: 1px solid #333;
 }
 
-/* Bottone Animato */
 #copyBtn {
     width: 100%;
     padding: 12px;
@@ -118,7 +116,6 @@ body {
     padding-right: 5px;
 }
 
-/* Scrollbar sottile ed elegante */
 #library::-webkit-scrollbar {
     width: 4px;
 }

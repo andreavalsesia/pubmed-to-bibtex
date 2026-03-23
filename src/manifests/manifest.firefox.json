@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "PubMed to BibTeX",
+    "version": "0.0.1",
+    "icons": {},
+    "permissions": [
+        "activeTab",
+        "clipboardWrite",
+        "storage"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://pubmed.ncbi.nlm.nih.gov/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "pubmed-to-bibtex@av.com",
+            "strict_min_version": "109.0"
+        }
+    }
+}
