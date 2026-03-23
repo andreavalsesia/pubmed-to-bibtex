@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "PubMed to BibTeX",
+    "version": "1.0",
+    "icons": {},
+    "permissions": [
+        "activeTab",
+        "clipboardWrite",
+        "storage"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://pubmed.ncbi.nlm.nih.gov/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ]
+}

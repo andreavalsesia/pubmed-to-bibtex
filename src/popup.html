@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="header">
+        <h2>PubMed to BibTeX</h2>
+    </div>
+
+    <div id="preview">Getting data from PubMed...</div>
+
+    <button id="copyBtn"><span>Copy citation</span></button>
+
+    <div class="footer">Format optimized for Biber / APA</div>
+
+    <div class="library-container">
+        <h3>Your Saved Papers</h3>
+        <div class="library" id="library"></div>
+    </div>
+
+    <div class="library-button-container">
+        <button class="action-btn" id="exportJsonBtn">Export JSON</button>
+        <button class="action-btn" id="importJsonBtn">Load JSON</button>
+    </div>
+    <input type="file" id="fileInput" style="display: none;" accept=".json">
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
