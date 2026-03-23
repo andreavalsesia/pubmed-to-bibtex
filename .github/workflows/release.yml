@@ -17,7 +17,7 @@ jobs:
               run: |
                   mkdir -p dist/chrome
                   cp -r src/* dist/chrome/
-                  cp src/manifests/manifest.chrome.json dist/chrome/manifest.json
+                  cp manifests/manifest.chrome.json dist/chrome/manifest.json
                   cd dist/chrome && zip -r ../../pubmed-to-bibtex-chrome.zip . && cd ../..
 
             # Firefox
@@ -25,7 +25,7 @@ jobs:
               run: |
                   mkdir -p dist/firefox
                   cp -r src/* dist/firefox/
-                  cp src/manifests/manifest.firefox.json dist/firefox/manifest.json
+                  cp manifests/manifest.firefox.json dist/firefox/manifest.json
                   cd dist/firefox && zip -r ../../pubmed-to-bibtex-firefox.zip . && cd ../..
 
             # Create a github release and load the zip files
