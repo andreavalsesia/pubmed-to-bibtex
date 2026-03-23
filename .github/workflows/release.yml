@@ -17,7 +17,7 @@ jobs:
               run: |
                   mkdir -p dist/chrome
                   cp -r src/* dist/chrome/
-                  cp manifests/manifest.chrome.json dist/chrome/manifest.json
+                  cp manifests/manifest.chromium.json dist/chrome/manifest.json
                   cd dist/chrome && zip -r ../../pubmed-to-bibtex-chrome.zip . && cd ../..
 
             # Firefox
