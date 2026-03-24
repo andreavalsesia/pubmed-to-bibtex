@@ -1,8 +1,8 @@
 # 🔬 PubMed to BibTeX Manager
 
-[![Version](https://img.shields.io)](https://github.com)
-[![License: GPL v3](https://img.shields.io)](https://www.gnu.org)
-[![Biber Ready](https://img.shields.io)](https://biblatex-biber.sourceforge.net)
+https://img.shields.io/github/v/release/andreavalsesia/pubmed-to-bibtex
+https://img.shields.io/github/license/andreavalsesia/pubmed-to-bibtex
+https://img.shields.io/badge/Biber%20Ready%20-%20?link=https%3A%2F%2Fbiblatex-biber.sourceforge.net
 
 **PubMed to BibTeX Manager** is a lightweight but powerful browser extension built for researchers and students. It extracts accurate metadata directly from PubMed and generates clean citations compatible with BibTeX and biber. The clean interface keeps track of all your saved papers directly in the browser and it's perfect for managing bibliography in any small or big project. 
 
@@ -38,26 +38,25 @@ This extension is under development and open-source. You can install it manually
 
 ---
 
-## 🛠️ Come contribuire
+## 🛠️ How to Contribute
 
-I contributi sono i benvenuti! Se vuoi aiutare a migliorare lo strumento:
+Contributions are welcome! If you want to help improving this tool:
 
-1. Fai un **Fork** del progetto.
-2. Crea un branch per la tua feature (`git checkout -b feature/NuovaFunzione`).
-3. Fai il **Commit** delle modifiche (`git commit -m 'Aggiunta NuovaFunzione'`).
-4. Fai il **Push** sul branch (`git push origin feature/NuovaFunzione`).
-5. Apri una **Pull Request**.
+1. **Fork** this GitHub repository.
+2. Create a branch for your feature (ex. `git checkout -b feature/new-feature`) or fixes.
+3. **Commit & Push** your changes to the branch.
+5. Open a **Pull Request** here on GitHub.
 
 ### Roadmap 🗺️
-- [ ] Supporto per esportazione in formato `.RIS` (EndNote/Mendeley).
-- [ ] Dark Mode automatica per il popup.
-- [ ] Traduzione dell'interfaccia in altre lingue.
+- More advanced automations and integrations with other tools (Zotero/Mendeley).
+- Dark Mode for popup.
+- Multi-language support for the UI.
 
 ---
 
-## 📜 Licenza
+## 📜 License
 
-Distribuito sotto licenza **GPL v3**. Consulta il file `LICENSE` per maggiori dettagli. *È vietata la ridistribuzione commerciale o il caricamento su store ufficiali senza autorizzazione.*
+Distributed under **GPL v3** license. Read the `LICENSE` files for more details. *This tool is open-source. Unauthorized redistribution on official stores or commercial distribution are forbidden*
 
 ---
 
