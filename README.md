@@ -1,8 +1,8 @@
 # 🔬 PubMed to BibTeX Manager
 
-https://img.shields.io/github/v/release/andreavalsesia/pubmed-to-bibtex
-https://img.shields.io/github/license/andreavalsesia/pubmed-to-bibtex
-https://img.shields.io/badge/Biber%20Ready%20-%20?link=https%3A%2F%2Fbiblatex-biber.sourceforge.net
+![Version](https://img.shields.io/github/v/release/andreavalsesia/pubmed-to-bibtex)
+![Version](https://img.shields.io/github/license/andreavalsesia/pubmed-to-bibtex)
+[![Version]https://img.shields.io/badge/Biber%20Ready%20-%20?](https%3A%2F%2Fbiblatex-biber.sourceforge.net)
 
 **PubMed to BibTeX Manager** is a lightweight but powerful browser extension built for researchers and students. It extracts accurate metadata directly from PubMed and generates clean citations compatible with BibTeX and biber. The clean interface keeps track of all your saved papers directly in the browser and it's perfect for managing bibliography in any small or big project. 
 
