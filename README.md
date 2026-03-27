@@ -56,7 +56,7 @@ Contributions are welcome! If you want to help improving this tool:
 
 ## 📜 License
 
-Distributed under **GPL v3** license. Read the `LICENSE` files for more details. *This tool is open-source. Unauthorized redistribution on official stores or commercial distribution are forbidden*
+Distributed under **GPL v3** license. Read the `LICENSE` files for more details.
 
 ---
 
