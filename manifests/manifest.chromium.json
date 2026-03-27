@@ -1,24 +1,24 @@
 {
-    "manifest_version": 3,
-    "name": "PubMed to BibTeX",
-    "version": "0.0.1",
-    "icons": {},
-    "permissions": [
-        "activeTab",
-        "clipboardWrite",
-        "storage"
-    ],
-    "action": {
-        "default_popup": "popup.html"
-    },
-    "content_scripts": [
-        {
-            "matches": [
-                "https://pubmed.ncbi.nlm.nih.gov/*"
-            ],
-            "js": [
-                "content.js"
-            ]
-        }
-    ]
+  "manifest_version": 3,
+  "name": "PubMed to BibTeX",
+  "version": "9.9.9",
+  "icons": {},
+  "permissions": [
+    "activeTab",
+    "clipboardWrite",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://pubmed.ncbi.nlm.nih.gov/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ]
 }
