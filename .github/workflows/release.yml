@@ -21,6 +21,15 @@ jobs:
                   mkdir -p dist/chrome
                   cp -r src/* dist/chrome/
                   cp manifests/manifest.chromium.json dist/chrome/manifest.json
+                  RAW_REF="${{ github.ref }}"
+                  if [[ $RAW_REF == refs/tags/v* ]]; then
+                    VERSION=${RAW_REF#refs/tags/v}
+                  else
+                    VERSION="9.9.9" # Versione fake se lanci act senza tag
+                  fi
+                  echo "Version: $VERSION"
+
+                  jq ".version = \"$VERSION\"" dist/chrome/manifest.json > temp.json && mv temp.json dist/chrome/manifest.json
                   cd dist/chrome && zip -r ../../pubmed-to-bibtex-chrome.zip . && cd ../..
 
             # Firefox
@@ -29,6 +38,15 @@ jobs:
                   mkdir -p dist/firefox
                   cp -r src/* dist/firefox/
                   cp manifests/manifest.firefox.json dist/firefox/manifest.json
+                                    RAW_REF="${{ github.ref }}"
+                  if [[ $RAW_REF == refs/tags/v* ]]; then
+                    VERSION=${RAW_REF#refs/tags/v}
+                  else
+                    VERSION="9.9.9" # Versione fake se lanci act senza tag
+                  fi
+                  echo "Version: $VERSION"
+
+                  jq ".version = \"$VERSION\"" dist/firefox/manifest.json > temp.json && mv temp.json dist/firefox/manifest.json
                   cd dist/firefox && zip -r ../../pubmed-to-bibtex-firefox.zip . && cd ../..
 
             # Create a github release and load the zip files

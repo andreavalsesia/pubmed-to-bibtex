@@ -1,13 +1,17 @@
 {
   "manifest_version": 3,
   "name": "PubMed to BibTeX",
-  "version": "9.9.9",
+  "version": "0.0.0",
   "icons": {},
   "permissions": [
+    "sidePanel",
     "activeTab",
     "clipboardWrite",
     "storage"
   ],
+  "side_panel": {
+    "default_path": "popup.html"
+  },
   "action": {
     "default_popup": "popup.html"
   },

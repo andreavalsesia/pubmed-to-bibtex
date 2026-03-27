@@ -68,6 +68,12 @@ document.getElementById('copyBtn').addEventListener('click', async () => {
     });
 });
 
+// Refresh
+document.getElementById('refreshBtn').addEventListener('click', () => {
+    console.log("Reload");
+    init();
+});
+
 // Generate an HTML div for each paper in the library
 function renderLibrary() {
     chrome.storage.local.get({ library: [] }, (data) => {
@@ -91,12 +97,12 @@ function renderLibrary() {
              PMID: ${item.pmid} ↗
           </a>
           <div style="display: flex; gap: 8px;">
-            <button class="action-btn copy-item" data-index="${index}" title="Copy to BibTeX">
+            <button class="action-btn copy-item" data-pmid="${item.pmid}" title="Copy to BibTeX">
                 <svg class="w-[18px] h-[18px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-5-4v4h4V3h-4Z"/>
                 </svg>
             </button>
-            <button class="action-btn danger delete-item" data-index="${index}" title="Delete">
+            <button class="action-btn danger delete-item" data-pmid="${item.pmid}" title="Delete">
                 <svg class="w-[18px] h-[18px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
                 </svg>
@@ -115,11 +121,11 @@ function attachLibraryEvents(libraryData) {
     // COPY ITEM
     document.querySelectorAll('.copy-item').forEach(btn => {
         btn.onclick = (e) => {
-            const index = e.target.dataset.index;
-            navigator.clipboard.writeText(libraryData[index].bib).then(() => {
-                const originalIcon = e.target.innerText;
+            const pmid = e.target.dataset.pmid;
+            navigator.clipboard.writeText(libraryData.find(p => p.pmid === pmid).bib).then(() => {
+                const originalIcon = e.target.innerHTML;
                 e.target.innerText = "✓";
-                setTimeout(() => e.target.innerText = originalIcon, 1500);
+                setTimeout(() => e.target.innerHTML = originalIcon, 1500);
             });
         };
     });
@@ -127,8 +133,8 @@ function attachLibraryEvents(libraryData) {
     // DELETE ITEM
     document.querySelectorAll('.delete-item').forEach(btn => {
         btn.onclick = (e) => {
-            const index = parseInt(e.target.dataset.index);
-            const updated = libraryData.filter((_, i) => i !== index);
+            const pmid = e.target.dataset.pmid;
+            const updated = libraryData.filter(p => p.pmid !== pmid);
             chrome.storage.local.set({ library: updated }, renderLibrary);
         };
     });
@@ -155,36 +161,46 @@ document.getElementById('exportJsonBtn').addEventListener('click', () => {
 });
 
 // IMPORT JSON
-document.getElementById('importJsonBtn').addEventListener('click', () => {
-    document.getElementById('fileInput').click();
-});
+const fileInput = document.getElementById("fileInput");
+const importBtn = document.getElementById("importJsonBtn");
 
-document.getElementById('fileInput').addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+if (importBtn && fileInput) {
+    importBtn.addEventListener("click", () => {
+        fileInput.nodeValue = "";
+        fileInput.click();
+    });
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        try {
-            const importedData = JSON.parse(e.target.result);
-            if (!Array.isArray(importedData)) throw new Error();
-
-            chrome.storage.local.get({ library: [] }, (data) => {
-                // Merge data from the imported list with the local list. In this way, already saved elements are not duplicated
-                const merged = [...importedData, ...data.library];
-                const unique = merged.filter((v, i, a) => a.findIndex(t => t.pmid === v.pmid) === i);
-
-                chrome.storage.local.set({ library: unique }, () => {
-                    renderLibrary();
-                    alert("Backup successfully loaded!");
-                });
-            });
-        } catch (err) {
-            alert("Error: The file is not a valid backup file.");
+    fileInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file) {
+            console.error("No file");
+        } else {
+            console.log("file");
         }
-    };
-    reader.readAsText(file);
-});
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const importedData = JSON.parse(e.target.result);
+                if (!Array.isArray(importedData)) throw new Error();
+
+                chrome.storage.local.get({ library: [] }, (data) => {
+                    // Merge data from the imported list with the local list. In this way, already saved elements are not duplicated
+                    const merged = [...importedData, ...data.library];
+                    const unique = merged.filter((v, i, a) => a.findIndex(t => t.pmid === v.pmid) === i);
+
+                    chrome.storage.local.set({ library: unique }, () => {
+                        renderLibrary();
+                        alert("Backup successfully loaded!");
+                    });
+                });
+            } catch (err) {
+                alert("Error: The file is not a valid backup file.");
+            }
+        };
+        reader.readAsText(file);
+    });
+}
 
 // Load everything
 init();
