@@ -61,3 +61,56 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ bibtex: getBibTeX(), title: title, pmid: pmid });
     }
 });
+
+function injectStyles() {
+    if (document.getElementById('pubmed-bib-styles')) return;
+
+    const style = document.createElement('style');
+    style.id = 'pubmed-bib-styles';
+    style.textContent = `
+        #pubmed-to-bib-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px;
+            border-radius: 3px !important;
+            width: 141px !important;
+            margin: 0 !important;
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: darkorange !important;
+            transition: all 0.1s ease !important;
+        }
+        #pubmed-to-bib-btn:hover {
+            background-color: orange !important;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+function injectBibButton() {
+    injectStyles()
+
+    // Cerchiamo la barra delle azioni di PubMed
+    const actionButtons = document.querySelector('.actions-buttons .inner-wrap');
+    if (!actionButtons || document.getElementById('pubmed-to-bib-btn')) return;
+
+    // Creiamo il bottone copiando lo stile di PubMed
+    const btn = document.createElement('button');
+    btn.id = 'pubmed-to-bib-btn';
+    btn.className = 'button-abstract control share-button'; // Classi native di PubMed
+    btn.innerHTML = `
+        <span class="icon">📄</span> 
+        <span class="text">To BibTeX</span>
+    `;
+
+    btn.onclick = () => {
+        chrome.runtime.sendMessage({ action: "open_side_panel" });
+    };
+
+    actionButtons.appendChild(btn);
+}
+
+// Esegui l'iniezione all'avvio e quando la pagina cambia (PubMed è una SPA parziale)
+injectBibButton();
+const observer = new MutationObserver(injectBibButton);
+observer.observe(document.body, { childList: true, subtree: true });
