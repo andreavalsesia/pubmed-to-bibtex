@@ -153,6 +153,10 @@ body {
     border-color: #86868b;
 }
 
+.action-btn:active {
+    background: #f0f0f5;
+}
+
 .danger:hover {
     background-color: red;
 }

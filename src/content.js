@@ -17,10 +17,20 @@ function getBibTeX() {
     const citText = document.querySelector('.cit')?.innerText || "";
     const pagesMatch = citText.match(/:(\w+-?\w*)\.?$/) || citText.match(/:(\w+-?\w*)\s/);
     let pages = pagesMatch ? pagesMatch[1] : "";
-    pages = pages.replace('-', '--');
+    if (pages.includes('-')) {
+        let [start, end] = pages.split('-');
 
-    const title = getMeta("citation_title");
-    const journal = getMeta("citation_journal_title");
+        if (end.length < start.length) {
+            const prefix = start.substring(0, start.length - end.length);
+            end = prefix + end;
+        }
+
+        pages = `${start}--${end}`;
+    }
+
+    const title = formatForLatex(getMeta("citation_title"));
+    let journal = getMeta("citation_journal_title");
+    journal = formatForLatex(journal.split("(")[0].trim());
 
     const date = getMeta("citation_date")?.split(" ")[0];
     let year;
@@ -48,6 +58,18 @@ function getBibTeX() {
     console.log(output);
 
     return output;
+}
+
+function formatForLatex(text) {
+    if (!text) return "";
+
+    let escaped = text.replace(/[&%$#_{}]/g, "\\$&");
+
+    escaped = escaped
+        .replace(/~/g, "\\textasciitilde ")
+        .replace(/\^/g, "\\textasciicircum ");
+
+    return escaped.replace(/\b([A-Z0-9]{2,}|[a-z]+[A-Z][a-z]*)\b/g, "{$1}");
 }
 
 // Listen for the "copy button" input
@@ -110,7 +132,6 @@ function injectBibButton() {
     actionButtons.appendChild(btn);
 }
 
-// Esegui l'iniezione all'avvio e quando la pagina cambia (PubMed è una SPA parziale)
 injectBibButton();
 const observer = new MutationObserver(injectBibButton);
 observer.observe(document.body, { childList: true, subtree: true });

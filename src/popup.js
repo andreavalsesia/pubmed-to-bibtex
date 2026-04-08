@@ -1,6 +1,8 @@
 // Generate the snippet when the popup is opened
 async function init() {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const [tab] = await chrome.tabs.query({ active: true, windowType: "normal" });
+
+    console.log(tab.url);
 
     if (tab?.url?.includes("pubmed.ncbi.nlm.nih.gov")) {
         chrome.tabs.sendMessage(tab.id, { action: "extract" }, (response) => {
@@ -39,14 +41,16 @@ document.getElementById('copyBtn').addEventListener('click', async () => {
                     bib: response.bibtex
                 };
 
-                // Don't save the entry if a corresponding PMID is already in library
+                // If a corresponding PMID is already in the library, update without creating a new entry
                 const exists = data.library.some(item => item.pmid === newItem.pmid);
 
                 let updatedLibrary;
                 if (!exists) {
                     updatedLibrary = [newItem, ...data.library];
                 } else {
-                    updatedLibrary = data.library;
+                    updatedLibrary = data.library.map(item =>
+                        item.pmid === newItem.pmid ? newItem : item
+                    );
                 }
 
                 // Save and refresh
@@ -201,6 +205,27 @@ if (importBtn && fileInput) {
         reader.readAsText(file);
     });
 }
+
+// Export bib file
+document.getElementById('generateBibBtn').addEventListener('click', () => {
+    chrome.storage.local.get({ library: [] }, (data) => {
+        if (data.library.length === 0) return alert("Empty library!");
+
+        const bibContent = data.library.map(item => item.bib).join("\n\n");
+
+        const blob = new Blob([bibContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "bibliography.bib";
+
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+});
 
 // Load everything
 init();
