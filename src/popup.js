@@ -125,11 +125,12 @@ function attachLibraryEvents(libraryData) {
     // COPY ITEM
     document.querySelectorAll('.copy-item').forEach(btn => {
         btn.onclick = (e) => {
-            const pmid = e.target.dataset.pmid;
+            const button = e.currentTarget;
+            const pmid = button.dataset.pmid;
             navigator.clipboard.writeText(libraryData.find(p => p.pmid === pmid).bib).then(() => {
-                const originalIcon = e.target.innerHTML;
-                e.target.innerText = "✓";
-                setTimeout(() => e.target.innerHTML = originalIcon, 1500);
+                const originalIcon = button.innerHTML;
+                button.innerText = "✓";
+                setTimeout(() => button.innerHTML = originalIcon, 1500);
             });
         };
     });
@@ -137,7 +138,7 @@ function attachLibraryEvents(libraryData) {
     // DELETE ITEM
     document.querySelectorAll('.delete-item').forEach(btn => {
         btn.onclick = (e) => {
-            const pmid = e.target.dataset.pmid;
+            const pmid = e.currentTarget.dataset.pmid;
             const updated = libraryData.filter(p => p.pmid !== pmid);
             chrome.storage.local.set({ library: updated }, renderLibrary);
         };
